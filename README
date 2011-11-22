@@ -1,0 +1,5 @@
+Django admin interface/database to store basic information on an existing project/service.  
+
+e.g., server location, codebase, who to contact for help, etc.
+
+Allow exporting of the documentation to static HTML--in case the documentation site itself is unavailable.
