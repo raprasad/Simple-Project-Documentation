@@ -1,0 +1,5 @@
+*.pyc
+.DS_Store
+
+/simple_project_docs/config/*
+/db/*
