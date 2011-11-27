@@ -1,4 +1,5 @@
 from django.db import models
+from django.template.defaultfilters import slugify
 
 
 class AuthSystem(models.Model):
@@ -38,6 +39,7 @@ class ProjectTag(models.Model):
         
 class Project(models.Model):
     name = models.CharField(max_length=255)
+    slug = models.SlugField(max_length=255, blank=True)
     purpose = models.CharField(max_length=255)
     description = models.TextField(blank=True)
 
@@ -57,6 +59,25 @@ class Project(models.Model):
     def __unicode__(self):
         return self.name
     
+    def get_html_filename(self):
+        if not self.slug:
+            return None
+        return '%s.html' % self.slug
+        
+    def save(self):
+        if self.id is None:
+            super(Project, self).save()
+            
+        self.slug = slugify(self.name)
+        while 1:
+            if Project.objects.exclude(id=self.id).filter(slug=self.slug).count() > 0:
+                self.slug = self.slug + '_'
+            else:
+                break
+                
+        super(Project, self).save()
+        
+        
     class Meta:
         ordering = ('name', )
     

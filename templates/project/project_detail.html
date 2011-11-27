@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+{% load project_extras %}
+{% block content %}
+&gt; <a href="{% url project_list %}">back to project list</a>
+
+<h1><span class="h1_plain">project docs:</span> {{ p.name }}</h1>
+
+{% if p.url %}
+<h2>url</h2>
+<div class="indent1"><a href="{{ p.url }}" target="_blank">{{ p.url }}</a></div>
+{% endif %}
+
+<h2>Purpose</h2>
+<div class="indent1">{{ p.purpose|linebreaks|safe }}</div>
+
+<h2>Contacts</h2>
+<div class="indent1">{{ p.contacts|mail_links|safe|linebreaks }}</div>
+
+{% if p.servers.count > 0 %}
+<h2>Servers</h2>
+<p><ul>
+	{% for s in p.servers.all %}
+	<li><b>{{ s.name }}</b>
+		{% if s.url %} &#151; <a href="{{ s.url }}">{{ s.url }}</a>{% endif %}
+		{% if s.short_description %}<p>{{ s.short_description|mail_links|safe|linebreaks  }}</p>{% endif %}
+		
+		</li>
+	{% endfor %}
+</ul></p>
+{% endif %}
+
+{% if p.authentication.count > 0 %}
+<h2>Authentication</h2>
+<p><ul>
+	{% for auth in p.authentication.all %}
+	<li><b>{{ auth.name }}</b>
+		{% if auth.url %} &#151; <a href="{{ auth.url }}">{{ auth.url }}</a>{% endif %}
+		{% if auth.description %}<p>{{ auth.description|mail_links|safe|linebreaks  }}</p>{% endif %}
+		</li>
+{% endfor %}
+</ul></p>
+{% endif %}
+
+{% if p.codebase %}
+<h2>Codebase</h2>
+<div class="indent1">{{ p.codebase|linebreaks|safe }}</div>
+{% endif %}
+
+{% if p.related_projects.count > 0 %}
+<h2>Related Projects</h2>
+<p><ul>
+{% for rl in p.related_projects.all %}
+	<li><a href="{% url project_detail rl.id %}">{{ rl.name }}</a></li>
+{% endfor %}
+</ul>
+</p>
+{% endif %}
+
+{% if p.tags.count > 0 %}
+<h2>Tags</h2>
+<div class="indent1">{% for t in p.tags.all %}
+	{{ t }} &nbsp;
+{% endfor %}
+</div>
+{% endif %}
+
+
+
+
+{% endblock %}

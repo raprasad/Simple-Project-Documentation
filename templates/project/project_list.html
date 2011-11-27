@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Project Listing</h1>
+
+<p>project count: {{ object_list.count }}
+<table cellpadding="0" cellspacing="0">
+	<thead>
+		<tr>
+			<th>&nbsp;</th>
+			<th>name</th>
+			<th>purpose</th>
+		</tr>
+	</thead>	
+	{% for p in project_list %}
+	 	<tr>
+			<td>{{ forloop.counter }}</td>
+			<td><a href="{% url project_detail p.id %}">{{ p.name }}</a></td>
+			<td>{{ p.purpose }}</td>
+		</tr>
+	{% empty %}
+		<tr>
+			<td colspan="3">no projects found</td>
+		</tr>
+	{% endfor %}
+</table>
+</p>
+{% endblock %}

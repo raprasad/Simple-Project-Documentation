@@ -26,6 +26,7 @@ admin.site.register(ProjectTag, ProjectTagAdmin)
 class ProjectAdmin(admin.ModelAdmin):
     save_on_top = True
     readonly_fields = ['last_update', 'date_added']
+    filter_horizontal = ['related_projects', 'tags', 'authentication', 'servers']
     list_display= ['name', 'purpose', 'last_update', 'date_added']
     search_fields =  ['name', 'purpose', 'description', 'contacts',  'last_update']
 admin.site.register(Project, ProjectAdmin)
