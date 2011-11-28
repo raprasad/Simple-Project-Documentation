@@ -1,5 +1,6 @@
 *.pyc
 .DS_Store
 
+/fixtures/*
 /simple_project_docs/config/*
 /db/*
