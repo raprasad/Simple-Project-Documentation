@@ -1,5 +1,6 @@
 from django.db import models
 from django.template.defaultfilters import slugify
+from django.core.urlresolvers import reverse
 
 
 class AuthSystem(models.Model):
@@ -24,7 +25,18 @@ class Server(models.Model):
         
     class Meta:
         ordering = ('name', )
- 
+
+
+class ProjectStatus(models.Model):
+    name = models.CharField(max_length=255)
+
+    def __unicode__(self):
+        return self.name
+
+    class Meta:
+        ordering = ('name', )
+        verbose_name_plural = 'Project Statuses'
+
 class ProjectTag(models.Model):
     name = models.CharField(max_length=255)
     url = models.URLField(blank=True)
@@ -39,6 +51,8 @@ class ProjectTag(models.Model):
         
 class Project(models.Model):
     name = models.CharField(max_length=255)
+    status = models.ForeignKey(ProjectStatus)
+    is_live = models.BooleanField(default=False)
     slug = models.SlugField(max_length=255, blank=True)
     purpose = models.CharField(max_length=255)
     description = models.TextField(blank=True)
@@ -63,7 +77,12 @@ class Project(models.Model):
         if not self.slug:
             return None
         return '%s.html' % self.slug
-        
+    
+    def get_absolute_url(self):
+        if self.id:
+                return reverse('project_detail', kwargs={ 'project_id' : self.id })
+        return ''
+            
     def save(self):
         if self.id is None:
             super(Project, self).save()

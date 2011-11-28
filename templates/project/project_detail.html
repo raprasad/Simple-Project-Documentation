@@ -1,9 +1,13 @@
 {% extends "base.html" %}
 {% load project_extras %}
 {% block content %}
-&gt; <a href="{% url project_list %}">back to project list</a>
 
+<div id="header_content">
 <h1><span class="h1_plain">project docs:</span> {{ p.name }}</h1>
+</div>
+
+<div id="main_content">
+    &gt; <a href="{% url project_list %}">back to project list</a>
 
 {% if p.url %}
 <h2>url</h2>
@@ -12,6 +16,11 @@
 
 <h2>Purpose</h2>
 <div class="indent1">{{ p.purpose|linebreaks|safe }}</div>
+
+{% if p.description %}
+<h2>Description</h2>
+<div class="indent1">{{ p.description|linebreaks|mail_links|safe }}</div>
+{% endif %}
 
 <h2>Contacts</h2>
 <div class="indent1">{{ p.contacts|mail_links|safe|linebreaks }}</div>
@@ -63,7 +72,7 @@
 {% endfor %}
 </div>
 {% endif %}
-
+</div>
 
 
 
