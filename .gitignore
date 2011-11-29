@@ -4,3 +4,5 @@
 /fixtures/*
 /simple_project_docs/config/*
 /db/*
+/static_sites/
+/media/project_docs/

@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block content %}
+<div id="header_content">
+    <h1>Project Listing</h1>
+</div>
+<div id="main_content">
+
+<p><b>project count</b>: {{ project_list.count }}
+<table cellpadding="0" cellspacing="0">
+	<thead>
+		<tr>
+			<th>&nbsp;</th>
+			<th>name</th>
+			<th>purpose</th>
+		</tr>
+	</thead>	
+	{% for p in project_list %}
+	 	<tr>
+			<td>{{ forloop.counter }}</td>
+			<td><a href="{{ p.get_html_filename }}">{{ p.name }}</a></td>
+			<td>{{ p.purpose }}</td>
+		</tr>
+	{% empty %}
+		<tr>
+			<td colspan="3">no projects found</td>
+		</tr>
+	{% endfor %}
+</table>
+</p>
+</div>
+{% endblock %}
+
+
+{% block footer %}
+<div id="footer">
+	<a href="index.html">project list</a>
+	&nbsp;|&nbsp; <a href="http://www.mcb.harvard.edu">Molecular &amp; Cellular Biology</a>
+    &nbsp;&nbsp; ({% now "F jS, Y f:s a" %})
+</div>
+{% endblock %}

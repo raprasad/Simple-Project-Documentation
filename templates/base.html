@@ -14,11 +14,14 @@
 
 {% block content %}
 {% endblock %}
+
+{% block footer %}
 <div id="footer">
 	<a href="{% url project_list %}">project list</a>
 	&nbsp;|&nbsp; <a href="http://www.mcb.harvard.edu">Molecular &amp; Cellular Biology</a>
     &nbsp;&nbsp; ({% now "F jS, Y f:s a" %})
 </div>
+{% endblock %}
 
 </div>
 

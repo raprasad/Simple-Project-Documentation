@@ -7,7 +7,7 @@
 </div>
 
 <div id="main_content">
-    &gt; <a href="{% url project_list %}">back to project list</a>
+    &gt; <a href="index.html">back to project list</a>
 
 
 <h2>Purpose</h2>
@@ -33,7 +33,7 @@
 <h2>Project Doc{{ p.get_project_docs|pluralize }}</h2>
 <ul>
 	{% for pd in p.get_project_docs %}
-		<li>{{ pd.name }}: <a href="{{ pd.doc.url }}" target="_blank">{{ pd.doc.name }}</a></li>
+		<li>{{ pd.name }}: <a href="{{ pd.doc.name }}" target="_blank">{{ pd.doc.name }}</a></li>
 	{% endfor %}
 </ul>
 {% endif %}
@@ -76,7 +76,7 @@
 <h2>Related Projects</h2>
 <p><ul>
 {% for rl in p.related_projects.all %}
-	<li><a href="{% url project_detail rl.id %}">{{ rl.name }}</a></li>
+	<li><a href="{{ rl.get_html_filename }}">{{ rl.name }}</a></li>
 {% endfor %}
 </ul>
 </p>
@@ -90,7 +90,13 @@
 </div>
 {% endif %}
 </div>
+{% endblock %}
 
 
-
+{% block footer %}
+<div id="footer">
+	<a href="index.html">project list</a>
+	&nbsp;|&nbsp; <a href="http://www.mcb.harvard.edu">Molecular &amp; Cellular Biology</a>
+    &nbsp;&nbsp; ({% now "F jS, Y f:s a" %})
+</div>
 {% endblock %}

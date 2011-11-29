@@ -2,6 +2,7 @@ from django.db import models
 from django.template.defaultfilters import slugify
 from django.core.urlresolvers import reverse
 
+PROJECT_UPLOAD_DIR = 'project_docs'
 
 class AuthSystem(models.Model):
     name = models.CharField(max_length=255)
@@ -73,6 +74,15 @@ class Project(models.Model):
     def __unicode__(self):
         return self.name
     
+
+    def get_project_docs(self):
+        return ProjectDoc.objects.filter(project=self).all()
+
+    def has_project_docs(self):
+        if ProjectDoc.objects.filter(project=self).count() > 0:
+            return True
+        return False
+        
     def get_project_links(self):
         return ProjectLink.objects.filter(project=self).all()
       
@@ -107,6 +117,18 @@ class Project(models.Model):
         
     class Meta:
         ordering = ('name', )
+
+class ProjectDoc(models.Model):
+    project = models.ForeignKey(Project)
+    name = models.CharField(max_length=255)
+    doc = models.FileField(upload_to=PROJECT_UPLOAD_DIR)
+    sort_order = models.IntegerField(default=1)
+
+    def __unicode__(self):
+        return self.name
+
+    class Meta:
+        ordering = ('project', 'sort_order' )
 
 class ProjectLink(models.Model):
     project = models.ForeignKey(Project)

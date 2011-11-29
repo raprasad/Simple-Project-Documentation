@@ -1,6 +1,6 @@
 # Django settings for simple_project_docs project.
-import config.laptop as config
-#import config.desktop as config
+#import config.laptop as config
+import config.desktop as config
 
 DEBUG = config.DEBUG
 TEMPLATE_DEBUG = DEBUG
@@ -10,6 +10,8 @@ ADMINS = config.ADMINS
 MANAGERS = ADMINS
 
 DATABASES = config.DATABASES
+
+STATIC_SITE_DIRECTORY = config.STATIC_SITE_DIRECTORY
 
 SESSION_COOKIE_NAME = 'simple_docs'
 
