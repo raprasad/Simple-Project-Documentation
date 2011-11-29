@@ -73,6 +73,14 @@ class Project(models.Model):
     def __unicode__(self):
         return self.name
     
+    def get_project_links(self):
+        return ProjectLink.objects.filter(project=self).all()
+      
+    def has_project_links(self):
+        if ProjectLink.objects.filter(project=self).count() > 0:
+            return True
+        return False
+         
     def get_html_filename(self):
         if not self.slug:
             return None
@@ -99,7 +107,19 @@ class Project(models.Model):
         
     class Meta:
         ordering = ('name', )
-    
+
+class ProjectLink(models.Model):
+    project = models.ForeignKey(Project)
+    name = models.CharField(max_length=255)
+    url = models.URLField(verify_exists=False)
+    sort_order = models.IntegerField(default=1)
+
+    def __unicode__(self):
+        return self.name
+        
+    class Meta:
+        ordering = ('project', 'sort_order' )
+
     
 class ProjectNote(models.Model):
     project = models.ForeignKey(Project)

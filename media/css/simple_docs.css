@@ -17,7 +17,7 @@ a:hover{ color:#ffcc00;}
     border-bottom:1px solid #000;
     padding:10px;}
     
-#container .indent1{ padding:0 30px;}
+#container .indent1{ padding:0 30px; line-height:140%;}
 
 #header_content{ padding:0px 40px;
     border-bottom:1px solid #006699;

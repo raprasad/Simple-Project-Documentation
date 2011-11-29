@@ -9,17 +9,23 @@
 <div id="main_content">
     &gt; <a href="{% url project_list %}">back to project list</a>
 
-{% if p.url %}
-<h2>url</h2>
-<div class="indent1"><a href="{{ p.url }}" target="_blank">{{ p.url }}</a></div>
-{% endif %}
 
 <h2>Purpose</h2>
 <div class="indent1">{{ p.purpose|linebreaks|safe }}</div>
 
+{% if p.url or p.has_project_links %}
+<h2>Link(s)</h2>
+<ul>
+	{% if p.url %}<li><a href="{{ p.url }}" target="_blank">{{ p.url }}</a></li>{% endif %}
+	{% for pl in p.get_project_links %}
+		<li>{{ pl.name }}: <a href="{{ pl.url }}" target="_blank">{{ pl.url }}</a></li>
+	{% endfor %}
+</ul>
+{% endif %}
+
 {% if p.description %}
 <h2>Description</h2>
-<div class="indent1">{{ p.description|linebreaks|mail_links|safe }}</div>
+<div class="indent1">{{ p.description|mail_links|safe|linebreaks }}</div>
 {% endif %}
 
 <h2>Contacts</h2>

@@ -1,6 +1,6 @@
 # Django settings for simple_project_docs project.
-#import config.laptop as config
-import config.desktop as config
+import config.laptop as config
+#import config.desktop as config
 
 DEBUG = config.DEBUG
 TEMPLATE_DEBUG = DEBUG

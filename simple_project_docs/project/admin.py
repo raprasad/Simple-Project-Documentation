@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from project.models import AuthSystem, Server, ProjectTag, Project, ProjectNote, ProjectStatus
+from project.models import AuthSystem, Server, ProjectTag, Project, ProjectLink, ProjectNote, ProjectStatus
 
 
 class AuthSystemAdmin(admin.ModelAdmin):
@@ -28,11 +28,15 @@ class ProjectTagAdmin(admin.ModelAdmin):
     search_fields =  ['name', 'url', 'description']
 admin.site.register(ProjectTag, ProjectTagAdmin)
 
+class ProjectLinkAdminInline(admin.TabularInline):
+    model = ProjectLink
+    extra=0
 
 class ProjectAdmin(admin.ModelAdmin):
     save_on_top = True
     readonly_fields = ['last_update', 'date_added']
     list_filter = ['is_live', 'status']
+    inlines = [ProjectLinkAdminInline]
     
     filter_horizontal = ['related_projects', 'tags', 'authentication', 'servers']
     list_display= ['name', 'purpose', 'is_live', 'status', 'last_update', 'date_added']
