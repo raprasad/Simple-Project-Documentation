@@ -17,8 +17,8 @@ SESSION_COOKIE_NAME = 'simple_docs'
 
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 
-SMTP_CONNECTION_STRING = 'mail.fas.harvard.edu' 
-EMAIL_HOST = 'mail.fas.harvard.edu' 
+SMTP_CONNECTION_STRING = config.SMTP_CONNECTION_STRING
+EMAIL_HOST = config.EMAIL_HOST
 
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
