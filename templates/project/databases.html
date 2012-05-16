@@ -1,0 +1,12 @@
+{% if p.databases.count > 0 %}
+<h2>Databases</h2>
+<p><ul>
+	{% for s in p.databases.all %}
+	<li><b>{{ s.name }}</b>
+            <p>DB name: <b>{{ s.db_name }}</b></p>
+	        <p>Server: <b>{{ s.server }}</b></p>
+	        <p>Description: {{ s.description|safe }}</p>
+		</li>
+	{% endfor %}
+</ul></p>
+{% endif %}

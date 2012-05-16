@@ -12,7 +12,7 @@ if __name__=='__main__':
     
 from django.template.loader import render_to_string
 
-from project.models import Project, ProjectDoc, PROJECT_UPLOAD_DIR
+from project.models import Database, Project, ProjectDoc, PROJECT_UPLOAD_DIR
 from settings import STATIC_SITE_DIRECTORY, MEDIA_ROOT
 import shutil
 import datetime
@@ -52,6 +52,14 @@ def make_pages():
     print '\n(%s) create project index page' % (cnt)
     content = render_to_string('static_site/static_project_list.html', { 'project_list': Project.objects.all() })
     write_page('index.html', content, dirname)
+
+
+    #-----------------------
+    # Make database page
+    #-----------------------
+    print '\n(%s) create database page' % (cnt)
+    content = render_to_string('static_site/static_database_list.html', { 'database_list': Database.objects.all() })
+    write_page('databases.html', content, dirname)
 
     #-----------------------
     # Copy over static media

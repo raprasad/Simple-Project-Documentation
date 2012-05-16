@@ -14,6 +14,13 @@ class ServerAdmin(admin.ModelAdmin):
     search_fields =  ['name', 'url', 'short_description', 'description']
 admin.site.register(Server, ServerAdmin)
 
+class DatabaseAdmin(admin.ModelAdmin):
+    save_on_top = True
+    list_display= ['name', 'db_name', 'description', 'server']
+    search_fields =  ['name', 'db_name', 'description', ]
+    list_filter = ['server']
+admin.site.register(Database, DatabaseAdmin)
+
 
 class ProjectStatusAdmin(admin.ModelAdmin):
     save_on_top = True
@@ -38,10 +45,11 @@ class ProjectDocAdminInline(admin.TabularInline):
 class ProjectAdmin(admin.ModelAdmin):
     save_on_top = True
     readonly_fields = ['last_update', 'date_added']
-    list_filter = ['is_live', 'status']
+    list_filter = ['is_live', 'status', 'servers',]
     inlines = [ProjectLinkAdminInline, ProjectDocAdminInline]
     
     filter_horizontal = ['related_projects', 'tags', 'authentication', 'servers']
+    filter_vertical = ['databases']
     list_display= ['name', 'purpose', 'is_live', 'status', 'last_update', 'date_added']
     search_fields =  ['name', 'purpose', 'description', 'contacts',  'last_update']
 admin.site.register(Project, ProjectAdmin)

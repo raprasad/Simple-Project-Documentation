@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% block content %}
+<div id="header_content">
+    <h1><a href="index.html">Project Listing</a>
+       &nbsp;|&nbsp; Database Listing
+   </h1>
+</div>
+<div id="main_content">
+    &gt; <a href="index.html">back to project list</a>
+
+<p><b>database count</b>: {{ database_list.count }}
+<table cellpadding="0" cellspacing="0">
+	<thead>
+		<tr>
+			<th>&nbsp;</th>
+			<th>name</th>
+			<th>db name</th>
+			<th>description</th>
+			<th>server</th>
+			<th>project(s)</th>
+		</tr>
+	</thead>	
+	{% for p in database_list %}
+	 	<tr>
+			<td>{{ forloop.counter }}</td>
+			<td>{{ p.name }}</td>
+			<td>{{ p.db_name }}</td>
+			<td>{{ p.description }}</td>
+			<td>{{ p.server }}</td>
+			<td>{% for proj in p.project_set.all %}
+			    {% if forloop.first %}<ul class="dblist">{% endif %}
+			    <li><a href="{{ proj.get_html_filename }}">{{ proj.name }}</a></li>
+			    {% if forloop.last %}</ul>{% endif %}
+			    {% empty %}
+			    n/a
+			    {% endfor %}
+			</td>
+		</tr>
+	{% empty %}
+		<tr>
+			<td colspan="6">no databases found</td>
+		</tr>
+	{% endfor %}
+</table>
+</p>
+</div>
+{% endblock %}
+
+
+{% block footer %}
+<div id="footer">
+	<a href="index.html">project list</a>
+	&nbsp;|&nbsp; <a href="http://www.mcb.harvard.edu">Molecular &amp; Cellular Biology</a>
+    &nbsp;&nbsp; ({% now "F jS, Y f:s a" %})
+</div>
+{% endblock %}

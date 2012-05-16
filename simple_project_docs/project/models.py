@@ -49,10 +49,22 @@ class ProjectTag(models.Model):
     class Meta:
         ordering = ('name', )
     
+class Database(models.Model):
+    name = models.CharField(max_length=255, help_text='Reference, not actual db_name')
+    db_name = models.CharField('Database Name', max_length=255)
+    server = models.ForeignKey(Server, on_delete=models.PROTECT)
+    description = models.CharField(max_length=255)
+    db_user = models.CharField('Database User', max_length=255, blank=True, help_text='optional')
+
+    def __unicode__(self):
+        return '%s, %s - %s' % (self.name, self.db_name, self.server)
         
+    class Meta:
+        ordering = ('name', )
+
 class Project(models.Model):
     name = models.CharField(max_length=255)
-    status = models.ForeignKey(ProjectStatus)
+    status = models.ForeignKey(ProjectStatus, on_delete=models.PROTECT)
     is_live = models.BooleanField(default=False)
     slug = models.SlugField(max_length=255, blank=True)
     purpose = models.CharField(max_length=255)
@@ -64,6 +76,7 @@ class Project(models.Model):
     codebase = models.TextField(blank=True)
     authentication = models.ManyToManyField(AuthSystem, blank=True, null=True)
     servers = models.ManyToManyField(Server, blank=True, null=True)
+    databases = models.ManyToManyField(Database, blank=True, null=True)
     
     related_projects = models.ManyToManyField('self', related_name='related projects', blank=True, null=True)
     tags = models.ManyToManyField(ProjectTag, blank=True, null=True)
@@ -119,7 +132,7 @@ class Project(models.Model):
         ordering = ('name', )
 
 class ProjectDoc(models.Model):
-    project = models.ForeignKey(Project)
+    project = models.ForeignKey(Project, on_delete=models.PROTECT)
     name = models.CharField(max_length=255)
     doc = models.FileField(upload_to=PROJECT_UPLOAD_DIR)
     sort_order = models.IntegerField(default=1)
@@ -131,7 +144,7 @@ class ProjectDoc(models.Model):
         ordering = ('project', 'sort_order' )
 
 class ProjectLink(models.Model):
-    project = models.ForeignKey(Project)
+    project = models.ForeignKey(Project, on_delete=models.PROTECT)
     name = models.CharField(max_length=255)
     url = models.URLField(verify_exists=False)
     sort_order = models.IntegerField(default=1)
@@ -144,7 +157,7 @@ class ProjectLink(models.Model):
 
     
 class ProjectNote(models.Model):
-    project = models.ForeignKey(Project)
+    project = models.ForeignKey(Project, on_delete=models.PROTECT)
     note = models.TextField()
     
     last_update = models.DateTimeField(auto_now=True)

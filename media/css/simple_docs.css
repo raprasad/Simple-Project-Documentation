@@ -28,6 +28,11 @@ a:hover{ color:#ffcc00;}
     padding:10px 00;
     margin:0;
 }
+#header_content h1 a{ font-weight:normal;
+}
+
+ul.dblist{ margin:2px 2px; padding:0;}
+ul.dblist li{ padding:0 5px; margin:0 8px;}
 
 #header_content .h1_plain{ font-weight:normal; font-size:12px;}    
 
